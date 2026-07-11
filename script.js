@@ -186,12 +186,20 @@ function getAverageKhai() {
 }
 
 function render() {
-  teamANameInput.value = state.teamA;
-  teamBNameInput.value = state.teamB;
-  teamALabel.textContent = state.teamA;
-  teamBLabel.textContent = state.teamB;
-  teamATotalLabel.textContent = state.teamA;
-  teamBTotalLabel.textContent = state.teamB;
+  if (document.activeElement !== teamANameInput) {
+    teamANameInput.value = state.teamA;
+  }
+  if (document.activeElement !== teamBNameInput) {
+    teamBNameInput.value = state.teamB;
+  }
+  
+  const displayTeamA = state.teamA || "Team A";
+  const displayTeamB = state.teamB || "Team B";
+
+  teamALabel.textContent = displayTeamA;
+  teamBLabel.textContent = displayTeamB;
+  teamATotalLabel.textContent = displayTeamA;
+  teamBTotalLabel.textContent = displayTeamB;
 
   const totals = getTotals();
 
@@ -275,7 +283,12 @@ function addEntry(event) {
   const selectedTeam = document.querySelector('input[name="khai-team"]:checked').value;
   const betType = document.querySelector('input[name="bet-type"]:checked').value;
 
-  if (!rate || !amount) {
+  if (!rateInput.value || rate <= 0) {
+    showModal({ title: "Validation Error", message: "Please enter a valid Rate (%) for your entry.", type: "alert" });
+    return;
+  }
+  if (!amountInput.value || amount <= 0) {
+    showModal({ title: "Validation Error", message: "Please enter a valid Amount for your entry.", type: "alert" });
     return;
   }
 
@@ -491,13 +504,13 @@ resetBookBtn.addEventListener("click", async () => {
 historyList.addEventListener("click", handleHistoryClick);
 
 teamANameInput.addEventListener("input", (event) => {
-  state.teamA = event.target.value || "Team A";
+  state.teamA = event.target.value;
   saveState();
   render();
 });
 
 teamBNameInput.addEventListener("input", (event) => {
-  state.teamB = event.target.value || "Team B";
+  state.teamB = event.target.value;
   saveState();
   render();
 });
