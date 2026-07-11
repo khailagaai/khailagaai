@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Khai Lagaai — Betting Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css?v=5" />
+</head>
+
+<body>
+  <div class="bg-orb bg-orb--1"></div>
+  <div class="bg-orb bg-orb--2"></div>
+
+  <div class="app-shell">
+    <header class="hero-card">
+      <div class="hero-copy">
+        <p class="eyebrow">Offline • Fast • Clean</p>
+        <h1>Khai Lagaai</h1>
+        <p class="subtitle">
+          Track every entry, monitor liabilities, and review your book in a single glance.
+        </p>
+      </div>
+      <button id="theme-toggle" class="icon-btn theme-toggle" aria-label="Toggle theme">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </header>
+
+    <section class="panel form-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">New Entry</p>
+          <h2>Add a bet</h2>
+        </div>
+        <p class="section-note">Enter the rate, amount, and choose the side.</p>
+      </div>
+
+      <form id="entry-form" novalidate>
+        <div class="team-grid">
+          <label class="field">
+            <span>Team A</span>
+            <input id="team-a-name" type="text" placeholder="Team A" />
+          </label>
+          <label class="field">
+            <span>Team B</span>
+            <input id="team-b-name" type="text" placeholder="Team B" />
+          </label>
+        </div>
+
+        <div class="input-grid">
+          <label class="field">
+            <span>Rate (%)</span>
+            <input id="rate" type="number" min="0" step="0.01" placeholder="Max 100" required />
+          </label>
+          <label class="field">
+            <span>Amount</span>
+            <input id="amount" type="number" min="0" step="1" placeholder="Min 100" required />
+          </label>
+        </div>
+
+        <div class="selection-grid">
+          <div class="selection-block">
+            <p class="selection-title">On Team</p>
+            <div class="radio-group" id="khai-choice">
+              <label class="pill-option">
+                <input type="radio" name="khai-team" value="team-a" checked />
+                <span id="team-a-label">Team A</span>
+              </label>
+              <label class="pill-option">
+                <input type="radio" name="khai-team" value="team-b" />
+                <span id="team-b-label">Team B</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="selection-block">
+            <p class="selection-title">Type</p>
+            <div class="radio-group" id="type-choice">
+              <label class="pill-option pill-khai">
+                <input type="radio" name="bet-type" value="khai" checked />
+                <span>Khai (Lay)</span>
+              </label>
+              <label class="pill-option pill-lagaai">
+                <input type="radio" name="bet-type" value="lagaai" />
+                <span>Lagaai (Back)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="submit-btn" class="btn btn-primary" type="submit">Add Entry</button>
+          <button id="cancel-edit-btn" class="btn btn-secondary hidden" type="button">Cancel</button>
+          
+          <div class="quick-actions">
+            <button id="cashout-btn" class="btn btn-cashout" type="button">CASHOUT</button>
+            <button id="losscut-btn" class="btn btn-losscut" type="button">LOSS CUT</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel summary-panel">
+      <div class="totals-grid">
+        <article class="total-card" id="team-a-card">
+          <p class="card-label" id="team-a-total-label">Team A</p>
+          <div class="value" id="team-a-total">₹0</div>
+          <p class="card-meta">Current balance</p>
+        </article>
+        <article class="total-card" id="team-b-card">
+          <p class="card-label" id="team-b-total-label">Team B</p>
+          <div class="value" id="team-b-total">₹0</div>
+          <p class="card-meta">Current balance</p>
+        </article>
+      </div>
+
+      <div class="stats-grid">
+        <article class="metric-card">
+          <p class="metric-label">Average Khai</p>
+          <div class="metric-value" id="average-khai">0%</div>
+        </article>
+        <article class="metric-card">
+          <p class="metric-label">Entries</p>
+          <div class="metric-value" id="entry-count">0</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel history-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">History</p>
+          <h2>Recent entries</h2>
+        </div>
+        <button id="reset-book" class="btn btn-ghost" type="button">Reset Book</button>
+      </div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+  </div>
+
+  <!-- Custom Modal -->
+  <div id="custom-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3 id="modal-title">Title</h3>
+      <p id="modal-message">Message</p>
+      <div id="modal-team-select-wrapper" class="hidden">
+        <label for="modal-team-select" class="field" style="margin-bottom: 8px; display:block;">Select Team:</label>
+        <select id="modal-team-select">
+          <option value="team-a">Team A</option>
+          <option value="team-b">Team B</option>
+        </select>
+      </div>
+      <input type="number" id="modal-input" class="hidden" placeholder="Enter rate..." step="0.01" min="0" />
+      <div class="modal-actions">
+        <button id="modal-cancel-btn" class="btn btn-secondary hidden">Cancel</button>
+        <button id="modal-ok-btn" class="btn btn-primary">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js?v=11"></script>
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+Khai Lagaai App - Future Suggestions
+
+### 1. Core Features (New things the app can do)
+1. Multiple Books/Matches: Allow users to create, save, and switch between different matches. Right now, it's a single book, but they might want to track "India vs Aus" and "Eng vs SA" at the same time.
+2. Session / Fancy Bets: In cricket, alongside Khai/Lagaai on the match winner, people bet on "Sessions" (e.g., 6 over runs Yes/No). Adding a separate tab to track Session bets would make this a complete suite.
+3. Commission / Brokerage: A setting to automatically deduct standard commission (e.g., 2% on net profit) from the final calculated totals, as many local bookmakers do this.
+4. Share / Export Book: A button to export the current Totals and History as a cleanly formatted Image (or PDF/Excel) to easily share with clients or friends via WhatsApp.
+5. Cloud Sync / Accounts: Right now, data is in local browser storage. Adding a lightweight backend (like Firebase) would let users log in and never lose their data if they clear their browser cache.
+
+### 2. Frontend / UI Changes (Improving the look and feel)
+1. Profit/Loss Charts: Add a small line chart or bar graph underneath the totals that visually shows how the profit/loss has swung back and forth over the course of the match.
+2. Animations & Sound: Add smooth slide-in animations when a new entry is added to the history, and maybe a subtle cash-register or "pop" sound effect when adding a bet or doing a Cashout.
+3. Custom Color Accents: We have Light/Dark mode, but you could let users pick their "Accent" color (e.g., Neon Blue, Gold, Crimson) to truly personalize the app's vibe.
+4. Mobile Sticky Action Bar: On mobile phones, if the history gets very long, scrolling up to Cashout is annoying. Moving the "Cashout" and "Loss Cut" buttons to a sticky floating bar at the bottom of the screen would be great for UX.
+5. Collapsible History / Pagination: Once a user adds 50+ bets, the list gets overwhelmingly long. Adding a "Show More" button or grouping them by time would clean up the UI.
+
+### 3. Added Functionalities (Quality of life improvements)
+1. Keyboard Shortcuts: For power users, let them press `K` to select Khai, `L` to select Lagaai, `C` for Cashout, and `Enter` to instantly submit. This allows lightning-fast data entry without a mouse.
+2. Undo / Redo System: If a user accidentally deletes an entry or adds a wrong one, a quick "Undo" toast notification at the bottom of the screen is much faster than manually fixing it.
+3. Live Match Auto-fill: Connect to a free sports API so that when a user types "Ind", it automatically suggests "India vs Australia" and auto-fills Team A and Team B.
+4. "What-If" Mode (Scenario Simulator): A toggle switch that lets users add "fake" bets just to see how their totals *would* change, without actually saving them to the real history.
+5. Auto-Backup to Local File: A button to simply download the state as a `.json` file, and an upload button to restore it. This acts as a manual safety net against clearing local browser data.
